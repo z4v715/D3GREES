@@ -68,6 +68,7 @@ def main():
         sys.exit("Person not found.")
 
     path = shortest_path(source, target)
+    print(path)
 
     if path is None:
         print("Not connected.")
@@ -90,52 +91,40 @@ def shortest_path(source, target):
     If no possible path, returns None.
     """
     
-    explored = StackFrontier()
-    frontier = StackFrontier()
+    # Frontier
+    front = QueueFrontier()
+    # Explored states
+    explored = QueueFrontier()
+    # Initial state
+    front.add(Node(source, None, neighbors_for_person(source)))
 
-    def dfs_search(id, target, connections):
-        print(f'ID: {id}')
-        print(f'CONN: {connections}')
-        # If the counter is 0 and the start of search, establish the root node
-        if id in people.keys() and connections == 0:
-            node = Node(id, None, people[id]['movies'])
-            counter += 1
-        # If the counter is 0 and not the start of the search, set the parent = to previous node (a movie node)
-        # action = movies
-        elif id in people.keys():
-            counter += 1
-            node = Node(id, explored.frontier[-1], people[id]['movies'])
-        # If the counter is 1, set the parent = previous node (a person node)
-        # action = stars
-        elif counter == 1:
-            counter -= 1
-            node = Node(id, explored.frontier[-1], movies[id]['stars'])
+    # Return list
+    path = list()
 
-        # Check if node is goal state
-        if node.state == target:
-            return
+    # Repeat loop, recursive
+    def bfs_search():
 
-        if node.action:
-            for child in node.action:
-                if not explored.contains_state(child):
-                    frontier.add(child)
+        if front.empty():
+            # No solution
+            return None
 
-        if frontier.empty():
-            return
-        
-        next = frontier.remove()
-        explored.add(id)
-
-        
-        connections += 1
-
-        dfs_search(next, target, connections)
-        
-    dfs_search(source, target, 0, 0)
-
-    print(explored.frontier)
-
-    return explored.frontier
+        next = front.remove()
+        if next.state == target:
+            # Solution found
+            return path
+        else:
+            # No solution found but frontier contains nodes
+            # Expand nodes
+            for pair in next.action:
+                added_node = Node(pair[1], pair[0], neighbors_for_person(pair[1]))
+                if explored.contains_state(added_node):
+                    front.add(added_node)
+            explored.add(next)
+            path.append((next.parent, next.state))
+    
+        return bfs_search()
+    
+    return bfs_search()
 
 def person_id_for_name(name):
     """
