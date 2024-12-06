@@ -109,6 +109,7 @@ def shortest_path(source, target):
             return None
 
         next = front.remove()
+        print(next)
         if next.state == target:
             # Solution found
             return path
@@ -117,10 +118,14 @@ def shortest_path(source, target):
             # Expand nodes
             for pair in next.action:
                 added_node = Node(pair[1], pair[0], neighbors_for_person(pair[1]))
-                if explored.contains_state(added_node):
+                if not explored.contains_state(added_node.state):
+                    print(f"Queue already contains {added_node.state}")
                     front.add(added_node)
             explored.add(next)
-            path.append((next.parent, next.state))
+            if len(explored.frontier) != 1:
+                path.append((next.parent, next.state))
+
+        print(explored.frontier)
     
         return bfs_search()
     
