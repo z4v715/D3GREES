@@ -88,40 +88,36 @@ def shortest_path(source, target):
     # Frontier
     front = QueueFrontier()
     # Explored states
-    explored = QueueFrontier()
+    explored = set()
     # Initial state
     front.add(Node(source, None, neighbors_for_person(source)))
 
     # Return list
     path = list()
 
-    # Repeat loop, recursive
-    def bfs_search(explored_queue, frontier_queue, path_to_target):
+    # Repeat loop
+    while True:
 
-        if frontier_queue.empty():
+        if front.empty():
             # No solution
             return None
 
-        next = frontier_queue.remove()
-        explored_queue.add(next)
+        next = front.remove()
+        explored.add(next)
 
-        if len(explored_queue.frontier) != 1:
-            path_to_target.append((next.parent, next.state))
+        if len(explored) != 1:
+            path.append((next.parent, next.state))
 
         if next.state == target:
             # Solution found
-            return path_to_target
+            return path
         else:
             # No solution found but frontier contains nodes
             # Expand nodes
             for pair in next.action:
                 added_node = Node(pair[1], pair[0], neighbors_for_person(pair[1]))
-                if not explored_queue.contains_state(added_node.state) and not frontier_queue.contains_state(added_node.state) and not frontier_queue.contains_parent(added_node.parent):
-                    frontier_queue.add(added_node)
-    
-        return bfs_search(explored_queue, front, path_to_target)
-    
-    return bfs_search(explored, front, path)
+                if not added_node.state in explored and not front.contains_state(added_node.state) and not front.contains_parent(added_node.parent):
+                    front.add(added_node)
 
 def person_id_for_name(name):
     """
