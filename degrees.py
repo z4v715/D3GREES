@@ -53,7 +53,7 @@ def load_data(directory):
 def main():
     if len(sys.argv) > 2:
         sys.exit("Usage: python degrees.py [directory]")
-    directory = "small"
+    directory = "large"
 
     # Load data from files into memory
     print("Loading data...")
@@ -84,13 +84,7 @@ def main():
             print(f"{i + 1}: {person1} and {person2} starred in {movie}")
 
 def shortest_path(source, target):
-    """
-    Returns the shortest list of (movie_id, person_id) pairs
-    that connect the source to the target.
 
-    If no possible path, returns None.
-    """
-    
     # Frontier
     front = QueueFrontier()
     # Explored states
@@ -102,32 +96,32 @@ def shortest_path(source, target):
     path = list()
 
     # Repeat loop, recursive
-    def bfs_search():
+    def bfs_search(explored_queue, frontier_queue, path_to_target):
 
-        if front.empty():
+        if frontier_queue.empty():
             # No solution
             return None
 
-        next = front.remove()
-        explored.add(next)
+        next = frontier_queue.remove()
+        explored_queue.add(next)
 
-        if len(explored.frontier) != 1:
-                path.append((next.parent, next.state))
+        if len(explored_queue.frontier) != 1:
+            path_to_target.append((next.parent, next.state))
 
         if next.state == target:
             # Solution found
-            return path
+            return path_to_target
         else:
             # No solution found but frontier contains nodes
             # Expand nodes
             for pair in next.action:
                 added_node = Node(pair[1], pair[0], neighbors_for_person(pair[1]))
-                if not explored.contains_state(added_node.state) and not front.contains_state(added_node.state):
-                    front.add(added_node)
+                if not explored_queue.contains_state(added_node.state) and not frontier_queue.contains_state(added_node.state) and not frontier_queue.contains_parent(added_node.parent):
+                    frontier_queue.add(added_node)
     
-        return bfs_search()
+        return bfs_search(explored_queue, front, path_to_target)
     
-    return bfs_search()
+    return bfs_search(explored, front, path)
 
 def person_id_for_name(name):
     """
