@@ -81,18 +81,41 @@ def main():
             movie = movies[path[i + 1][0]]["title"]
             print(f"{i + 1}: {person1} and {person2} starred in {movie}")
 
-
 def shortest_path(source, target):
-    """
-    Returns the shortest list of (movie_id, person_id) pairs
-    that connect the source to the target.
 
-    If no possible path, returns None.
-    """
+    # Frontier
+    front = QueueFrontier()
+    # Explored states
+    explored = set()
+    # Initial state
+    front.add(Node(source, None, neighbors_for_person(source)))
 
-    # TODO
-    raise NotImplementedError
+    # Return list
+    path = list()
 
+    # Repeat loop
+    while True:
+
+        if front.empty():
+            # No solution
+            return None
+
+        next = front.remove()
+        explored.add(next)
+
+        if len(explored) != 1:
+            path.append((next.parent, next.state))
+
+        if next.state == target:
+            # Solution found
+            return path
+        else:
+            # No solution found but frontier contains nodes
+            # Expand nodes
+            for pair in next.action:
+                added_node = Node(pair[1], pair[0], neighbors_for_person(pair[1]))
+                if not added_node.state in explored and not front.contains_state(added_node.state) and not front.contains_parent(added_node.parent):
+                    front.add(added_node)
 
 def person_id_for_name(name):
     """
