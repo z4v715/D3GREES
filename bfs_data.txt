@@ -1,0 +1,47 @@
+
+1: Kevin Bacon and Jack Nicholson starred in A Few Good Men
+2: Jack Nicholson and Bill Paxton starred in Apollo 13
+3: Bill Paxton and Tom Hanks starred in Apollo 13
+
+1: Kevin Bacon and Gary Sinise starred in Apollo 13
+2: Gary Sinise and Tom Hanks starred in Apollo 13
+
+1: Kevin Bacon and Jack Nicholson starred in A Few Good Men
+2: Jack Nicholson and Tom Hanks starred in Apollo 13
+
+1: Kevin Bacon and Tom Hanks starred in Apollo 13
+
+1: Kevin Bacon and Jack Nicholson starred in A Few Good Men
+2: Jack Nicholson and Tom Cruise starred in A Few Good Men
+3: Tom Cruise and Gary Sinise starred in Apollo 13
+4: Gary Sinise and Demi Moore starred in A Few Good Men
+5: Demi Moore and Bill Paxton starred in Apollo 13
+6: Bill Paxton and Tom Hanks starred in Apollo 13
+
+1: Kevin Bacon and Gary Sinise starred in Apollo 13
+2: Gary Sinise and Bill Paxton starred in Apollo 13
+3: Bill Paxton and Jack Nicholson starred in A Few Good Men
+4: Jack Nicholson and Tom Cruise starred in A Few Good Men
+5: Tom Cruise and Tom Hanks starred in Apollo 13
+
+1: Kevin Bacon and Bill Paxton starred in Apollo 13
+2: Bill Paxton and Jack Nicholson starred in A Few Good Men
+3: Jack Nicholson and Gary Sinise starred in Apollo 13
+4: Gary Sinise and Tom Hanks starred in Apollo 13
+
+1: Kevin Bacon and Jack Nicholson starred in A Few Good Men
+2: Jack Nicholson and Tom Cruise starred in A Few Good Men
+3: Tom Cruise and Bill Paxton starred in Apollo 13
+4: Bill Paxton and Demi Moore starred in A Few Good Men
+5: Demi Moore and Gary Sinise starred in Apollo 13
+6: Gary Sinise and Tom Hanks starred in Apollo 13
+
+1: Kevin Bacon and Demi Moore starred in A Few Good Men
+2: Demi Moore and Tom Hanks starred in Apollo 13
+
+1: Kevin Bacon and Gary Sinise starred in Apollo 13
+2: Gary Sinise and Jack Nicholson starred in A Few Good Men
+3: Jack Nicholson and Tom Cruise starred in A Few Good Men
+4: Tom Cruise and Bill Paxton starred in Apollo 13
+5: Bill Paxton and Demi Moore starred in A Few Good Men
+6: Demi Moore and Tom Hanks starred in Apollo 13

@@ -62,12 +62,21 @@ def main():
     load_data(directory)
     print("Data loaded.")
 
-    source = person_id_for_name(input("Name: "))
+    # TESTING -------------------------------------------------------------------
+
+    #source = person_id_for_name(input("Name: "))
+    source = person_id_for_name("Kevin Bacon")
     if source is None:
         sys.exit("Person not found.")
-    target = person_id_for_name(input("Name: "))
+    target = person_id_for_name("Tom Hanks")
+    #target = person_id_for_name(input("Name: "))
     if target is None:
         sys.exit("Person not found.")
+
+    times = 10
+
+    data = open("bfs_data.txt", "a")
+    data.write("\n")
 
     path = shortest_path(source, target)
 
@@ -82,11 +91,14 @@ def main():
             person2 = people[path[i + 1][1]]["name"]
             movie = movies[path[i + 1][0]]["title"]
             print(f"{i + 1}: {person1} and {person2} starred in {movie}")
+            data.write(f"{i + 1}: {person1} and {person2} starred in {movie}\n")
+
+    data.close()
 
 
 def shortest_path(source, target):
     """
-    Returns the shortest list of (movie_id, person_id) pairs
+    Returns the shortest list of (movie_id, person_id) pairsp
     that connect the source to the target.
 
     If no possible path, returns None.
@@ -104,7 +116,7 @@ def shortest_path(source, target):
             return None
         
         next = front.remove()
-        explored.add(next)
+        explored.add(next.state)
         
         if len(explored) != 1:
             path.append((next.parent, next.state))
@@ -114,8 +126,10 @@ def shortest_path(source, target):
         else:
             for pair in next.action:
                 added_node = Node(pair[1], pair[0], neighbors_for_person(pair[1]))
-                if added_node not in explored:
+                if added_node.state not in explored:
                     front.add(added_node)
+                else:
+                    print("skip")
 
 
 def person_id_for_name(name):
