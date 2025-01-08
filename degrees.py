@@ -12,6 +12,7 @@ people = {}
 # Maps movie_ids to a dictionary of: title, year, stars (a set of person_ids)
 movies = {}
 
+
 def load_data(directory):
     """
     Load data from CSV files into memory.
@@ -49,6 +50,7 @@ def load_data(directory):
                 movies[row["movie_id"]]["stars"].add(row["person_id"])
             except KeyError:
                 pass
+
 
 def main():
     if len(sys.argv) > 2:
@@ -90,8 +92,30 @@ def shortest_path(source, target):
     If no possible path, returns None.
     """
 
-    # TODO
-    raise NotImplementedError
+    front = QueueFrontier()
+    explored = set()
+    path = list()
+
+    front.add(Node(source, None, neighbors_for_person(source)))
+
+    while True:
+
+        if front.empty():
+            return None
+        
+        next = front.remove()
+        explored.add(next)
+        
+        if len(explored) != 1:
+            path.append((next.parent, next.state))
+
+        if next.state == target:
+            return path
+        else:
+            for pair in next.action:
+                added_node = Node(pair[1], pair[0], neighbors_for_person(pair[1]))
+                if added_node not in explored:
+                    front.add(added_node)
 
 
 def person_id_for_name(name):
@@ -118,6 +142,7 @@ def person_id_for_name(name):
         return None
     else:
         return person_ids[0]
+
 
 def neighbors_for_person(person_id):
     """

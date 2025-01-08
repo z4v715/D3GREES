@@ -12,10 +12,7 @@ class StackFrontier():
         self.frontier.append(node)
 
     def contains_state(self, state):
-        for node in self.frontier:
-            if node.state == state:
-                return True
-        return False
+        return any(node.state == state for node in self.frontier)
     
     def contains_parent(self, parent) -> bool:
         for node in self.frontier:
