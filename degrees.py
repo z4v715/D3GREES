@@ -53,10 +53,16 @@ def load_data(directory):
 
 
 def main():
+    '''
     if len(sys.argv) > 2:
         sys.exit("Usage: python degrees.py [directory]")
-    directory = sys.argv[1] if len(sys.argv) == 2 else "large"
-
+    '''
+    if len(sys.argv) > 3:
+        sys.exit("Usage: python degrees.py [directory]")
+    #directory = sys.argv[1] if len(sys.argv) == 2 else "large"
+    directory = sys.argv[1]
+    tests = int(sys.argv[2])
+    
     # Load data from files into memory
     print("Loading data...")
     load_data(directory)
@@ -64,35 +70,43 @@ def main():
 
     # TESTING -------------------------------------------------------------------
 
-    #source = person_id_for_name(input("Name: "))
-    source = person_id_for_name("Kevin Bacon")
-    if source is None:
-        sys.exit("Person not found.")
-    target = person_id_for_name("Tom Hanks")
-    #target = person_id_for_name(input("Name: "))
-    if target is None:
-        sys.exit("Person not found.")
+    data = open("data.csv", "a")
 
-    times = 10
+    def search(person):
 
-    data = open("bfs_data.txt", "a")
+        #source = person_id_for_name(input("Name: "))
+        source = person_id_for_name("Kevin Bacon")
+        if source is None:
+            sys.exit("Person not found.")
+        target = person_id_for_name(person)
+        #target = person_id_for_name(input("Name: "))
+        if target is None:
+            sys.exit("Person not found.")
+
+        path = shortest_path(source, target)
+
+        if path is None:
+            print("Not connected.")
+            data.write(f"\"{person}\",N\n")
+        else:
+            degrees = len(path)
+            print(f"{degrees} degrees of separation.")
+            path = [(None, source)] + path
+            for i in range(degrees):
+                person1 = people[path[i][1]]["name"]
+                person2 = people[path[i + 1][1]]["name"]
+                movie = movies[path[i + 1][0]]["title"]
+                print(f"{i + 1}: {person1} and {person2} starred in {movie}")
+
+            data.write(f"\"{person}\",{degrees}\n")
+        
+
+    names = [item[1]["name"] for item in people.items()]
+
+    for i in range(tests):
+        search(names[i])
+
     data.write("\n")
-
-    path = shortest_path(source, target)
-
-    if path is None:
-        print("Not connected.")
-    else:
-        degrees = len(path)
-        print(f"{degrees} degrees of separation.")
-        path = [(None, source)] + path
-        for i in range(degrees):
-            person1 = people[path[i][1]]["name"]
-            person2 = people[path[i + 1][1]]["name"]
-            movie = movies[path[i + 1][0]]["title"]
-            print(f"{i + 1}: {person1} and {person2} starred in {movie}")
-            data.write(f"{i + 1}: {person1} and {person2} starred in {movie}\n")
-
     data.close()
 
 
@@ -126,10 +140,12 @@ def shortest_path(source, target):
         else:
             for pair in next.action:
                 added_node = Node(pair[1], pair[0], neighbors_for_person(pair[1]))
-                if added_node.state not in explored:
-                    front.add(added_node)
-                else:
-                    print("skip")
+                if added_node.state not in explored and not front.contains_state(added_node.state) and added_node.parent not in explored:
+                    if added_node.state == target:
+                        path.append((added_node.parent, added_node.state))
+                        return path
+                    else:
+                        front.add(added_node)
 
 
 def person_id_for_name(name):
@@ -141,16 +157,21 @@ def person_id_for_name(name):
     if len(person_ids) == 0:
         return None
     elif len(person_ids) > 1:
+
+        '''
         print(f"Which '{name}'?")
         for person_id in person_ids:
             person = people[person_id]
             name = person["name"]
             birth = person["birth"]
             print(f"ID: {person_id}, Name: {name}, Birth: {birth}")
+            '''
         try:
-            person_id = input("Intended Person ID: ")
-            if person_id in person_ids:
-                return person_id
+            person_id = person_ids[0]
+            return person_id
+            #person_id = input("Intended Person ID: ")
+            #if person_id in person_ids:
+                #return person_id
         except ValueError:
             pass
         return None
