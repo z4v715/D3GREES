@@ -7,16 +7,15 @@ system = systems[1]
 
 # Experiment settings
 times = 1 # How many times sampled
-samples = 5 # How many samples
-mode = "large"
-
-# Clear the two sheets
-os.remove("data.csv")
-os.remove("formatted_data.csv")
+samples = 16 # How many samples
+mode = "small"
 
 data = open("data.csv", "a")
 data.write("target,degrees\n")
 data.close()
+
+path_data = open("path_data.csv", "a")
+path_data.write("target,nodes\n")
 
 if system == systems[0]:
     command = ["cd", "~/Documents/Github/D3GREES/"]
@@ -26,7 +25,5 @@ if system == systems[0]:
         subprocess.run(command1)
 elif system == systems[1]:
     for i in range(times):
-        os.popen(f"start cmd /k; cd C:\\Users\\aiden\\OneDrive\\Documents\\GitHub\\D3GREES\\test.py ^& py degrees.py {mode} {samples}")
-
-
+        os.popen(f"start cmd /k; cd C:\\Users\\26AiZavaleta\\OneDrive - St. Francis High School\\Documents\\GitHub\\D3GREES\\ ^& py degrees.py {mode} {samples}")
 

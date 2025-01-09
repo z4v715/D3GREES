@@ -1,0 +1,30 @@
+target,nodes
+1,[9323132]
+1,[9323133, 9323130, 9323131]
+1,[9323130, 9323131]
+1,[9323131]
+1,[]
+2,[9323132]
+2,[9323133, 9323130, 9323131]
+2,[9323130, 9323131]
+2,[9323131]
+2,[]
+3,[9323132]
+3,[9323133, 9323130, 9323131]
+3,[9323130, 9323131]
+3,[9323131]
+3,[]
+4,[9323132]
+4,[9323133, 9323130, 9323131]
+4,[9323130, 9323131]
+4,[9323131]
+4,[]
+5,[9323132]
+5,[9323133, 9323130, 9323131]
+5,[9323130, 9323131]
+5,[9323131]
+5,[]
+
+# I just realized that I may have to add more people to the frontier at a time
+# I added a part of the code that scans to see if any of the people in the children states are the target
+# I dont have to worry too much about adding too many people

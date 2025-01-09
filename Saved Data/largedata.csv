@@ -1,0 +1,8 @@
+target,degrees
+Fred Astaire,1159 213 N N 1534 
+Lauren Bacall,35 160 N N 53 
+Brigitte Bardot,1246 738 N N 1663 
+John Belushi,60 3 N N 156 
+Ingmar Bergman,259 1501 N N 771 
+
+# Added nodes that are already in the frontier will not be added again

@@ -117,7 +117,7 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
-
+    
     front = QueueFrontier()
     explored = set()
     path = list()
@@ -126,26 +126,31 @@ def shortest_path(source, target):
 
     while True:
 
+        path_data = open("path_data.csv", "a")
+        path_data.write(f"{target},{front.frontier}\n")
+        path_data.close()
+
         if front.empty():
             return None
         
         next = front.remove()
-        explored.add(next.state)
-        
-        if len(explored) != 1:
-            path.append((next.parent, next.state))
 
         if next.state == target:
             return path
         else:
             for pair in next.action:
                 added_node = Node(pair[1], pair[0], neighbors_for_person(pair[1]))
-                if added_node.state not in explored and not front.contains_state(added_node.state):
+                if added_node.state not in explored and front.contains_state(added_node.state) == False:
                     if added_node.state == target:
                         path.append((added_node.parent, added_node.state))
                         return path
                     else:
                         front.add(added_node)
+                        
+            explored.add(next.state)
+
+        if len(explored) != 1:
+            path.append((next.parent, next.state))
 
 
 def person_id_for_name(name):
@@ -156,27 +161,25 @@ def person_id_for_name(name):
     person_ids = list(names.get(name.lower(), set()))
     if len(person_ids) == 0:
         return None
+    else:
+        return person_ids[0]
+    '''
     elif len(person_ids) > 1:
 
-        '''
         print(f"Which '{name}'?")
         for person_id in person_ids:
             person = people[person_id]
             name = person["name"]
             birth = person["birth"]
             print(f"ID: {person_id}, Name: {name}, Birth: {birth}")
-            '''
         try:
-            person_id = person_ids[0]
-            return person_id
-            #person_id = input("Intended Person ID: ")
-            #if person_id in person_ids:
-                #return person_id
+            person_id = input("Intended Person ID: ")
+            if person_id in person_ids:
+                return person_id
         except ValueError:
             pass
         return None
-    else:
-        return person_ids[0]
+    '''
 
 
 def neighbors_for_person(person_id):

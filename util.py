@@ -4,6 +4,10 @@ class Node():
         self.parent = parent
         self.action = action
 
+    # TESTING
+    def __repr__(self):
+        return self.state
+
 
 class StackFrontier():
     def __init__(self):

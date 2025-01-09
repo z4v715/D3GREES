@@ -1,0 +1,33 @@
+target,degrees
+"Fred Astaire",1258
+"Lauren Bacall",44
+"Brigitte Bardot",399
+"John Belushi",72
+"Ingmar Bergman",370
+
+"Fred Astaire",1018
+"Lauren Bacall",108
+"Brigitte Bardot",3277
+"John Belushi",13
+"Ingmar Bergman",243
+
+"Fred Astaire",925
+"Lauren Bacall",116
+"Brigitte Bardot",3124
+"John Belushi",137
+"Ingmar Bergman",357
+
+target,degrees
+"Fred Astaire",N
+"Lauren Bacall",N
+"Brigitte Bardot",N
+"John Belushi",N
+"Ingmar Bergman",N
+
+"Fred Astaire",1917
+"Lauren Bacall",31
+"Brigitte Bardot",3622
+"John Belushi",79
+"Ingmar Bergman",404
+
+# Added nodes already in frontier allowed

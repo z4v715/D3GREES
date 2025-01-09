@@ -1,0 +1,13 @@
+target,nodes
+1,[102]
+1,[]
+2,[102]
+2,[]
+3,[102]
+3,[]
+4,[102]
+4,[]
+5,[102]
+5,[]
+
+# Disallowed nodes that were already in the frontier from getting added again
