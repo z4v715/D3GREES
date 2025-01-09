@@ -140,7 +140,7 @@ def shortest_path(source, target):
         else:
             for pair in next.action:
                 added_node = Node(pair[1], pair[0], neighbors_for_person(pair[1]))
-                if added_node.state not in explored and not front.contains_state(added_node.state) and added_node.parent not in explored:
+                if added_node.state not in explored and not front.contains_state(added_node.state):
                     if added_node.state == target:
                         path.append((added_node.parent, added_node.state))
                         return path
