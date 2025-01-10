@@ -1,5 +1,8 @@
 import csv
 import sys
+import random
+
+import time
 
 from util import Node, StackFrontier, QueueFrontier
 
@@ -97,7 +100,6 @@ def main():
 
         data.write(f"\"{source}\",\"{target}\",{degrees}\n")
 
-    data.write("\n")
     data.close()
 
 
@@ -154,6 +156,7 @@ def person_id_for_name(name):
         return None
     elif len(person_ids) > 1:
 
+        '''
         print(f"Which '{name}'?")
         for person_id in person_ids:
             person = people[person_id]
@@ -166,7 +169,12 @@ def person_id_for_name(name):
                 return person_id
         except ValueError:
             pass
+            
         return None
+        '''
+        
+        # RANDOMIZED FOR TESTING
+        return person_ids[random.randint(0, len(person_ids) - 1)]
     else:
         return person_ids[0]
 
