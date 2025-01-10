@@ -1,19 +1,36 @@
 target,degrees
-target,degrees
 "Kevin Bacon",0
 "Tom Cruise",1
-"Cary Elwes",15
+"Cary Elwes",14
 "Tom Hanks",1
-"Mandy Patinkin",15
+"Mandy Patinkin",14
 "Dustin Hoffman",1
-"Chris Sarandon",15
+"Chris Sarandon",14
 "Demi Moore",1
 "Jack Nicholson",1
 "Bill Paxton",1
-"Sally Field",3
+"Sally Field",5
 "Valeria Golino",1
 "Gerald R. Molen",1
 "Gary Sinise",1
-"Robin Wright",3
+"Robin Wright",5
+"Emma Watson",N
+
+target,degrees
+"Kevin Bacon",0
+"Tom Cruise",1
+"Cary Elwes",11
+"Tom Hanks",1
+"Mandy Patinkin",11
+"Dustin Hoffman",7
+"Chris Sarandon",11
+"Demi Moore",1
+"Jack Nicholson",1
+"Bill Paxton",1
+"Sally Field",2
+"Valeria Golino",7
+"Gerald R. Molen",7
+"Gary Sinise",1
+"Robin Wright",2
 "Emma Watson",N
 

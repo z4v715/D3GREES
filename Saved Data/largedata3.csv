@@ -1,0 +1,14 @@
+target,degrees
+"Fred Astaire",1652
+"Lauren Bacall",54
+"Brigitte Bardot",1961
+"John Belushi",30
+"Ingmar Bergman",572
+
+"Fred Astaire",733
+"Lauren Bacall",124
+"Brigitte Bardot",2151
+"John Belushi",161
+"Ingmar Bergman",921
+
+# This data is reliable with no N's, but only 2 times hmm... lets try 10!
