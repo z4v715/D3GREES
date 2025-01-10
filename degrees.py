@@ -57,12 +57,13 @@ def main():
     if len(sys.argv) > 2:
         sys.exit("Usage: python degrees.py [directory]")
     '''
-    if len(sys.argv) > 3:
-        sys.exit("Usage: python degrees.py [directory]")
+    if len(sys.argv) != 4:
+        sys.exit("Usage: python degrees.py [directory] [source] [target]")
     #directory = sys.argv[1] if len(sys.argv) == 2 else "large"
     directory = sys.argv[1]
-    tests = int(sys.argv[2])
-    
+    source = sys.argv[2]
+    target = sys.argv[3]
+
     # Load data from files into memory
     print("Loading data...")
     load_data(directory)
@@ -72,39 +73,29 @@ def main():
 
     data = open("data.csv", "a")
 
-    def search(person):
-
-        #source = person_id_for_name(input("Name: "))
-        source = person_id_for_name("Kevin Bacon")
-        if source is None:
-            sys.exit("Person not found.")
-        target = person_id_for_name(person)
+    #source = person_id_for_name(input("Name: "))
+    if source is None:
+        sys.exit("Person not found.")
         #target = person_id_for_name(input("Name: "))
-        if target is None:
-            sys.exit("Person not found.")
+    if target is None:
+        sys.exit("Person not found.")
 
-        path = shortest_path(source, target)
+    path = shortest_path(source, target)
 
-        if path is None:
-            print("Not connected.")
-            data.write(f"\"{person}\",N\n")
-        else:
-            degrees = len(path)
-            print(f"{degrees} degrees of separation.")
-            path = [(None, source)] + path
-            for i in range(degrees):
-                person1 = people[path[i][1]]["name"]
-                person2 = people[path[i + 1][1]]["name"]
-                movie = movies[path[i + 1][0]]["title"]
-                print(f"{i + 1}: {person1} and {person2} starred in {movie}")
+    if path is None:
+        print("Not connected.")
+        data.write(f"\"{source}\",\"{target}\",N\n")
+    else:
+        degrees = len(path)
+        print(f"{degrees} degrees of separation.")
+        path = [(None, source)] + path
+        for i in range(degrees):
+            person1 = people[path[i][1]]["name"]
+            person2 = people[path[i + 1][1]]["name"]
+            movie = movies[path[i + 1][0]]["title"]
+            print(f"{i + 1}: {person1} and {person2} starred in {movie}")
 
-            data.write(f"\"{person}\",{degrees}\n")
-        
-
-    names = [item[1]["name"] for item in people.items()]
-
-    for i in range(tests):
-        search(names[i])
+        data.write(f"\"{source}\",\"{target}\",{degrees}\n")
 
     data.write("\n")
     data.close()
@@ -127,7 +118,7 @@ def shortest_path(source, target):
     while True:
 
         path_data = open("path_data.csv", "a")
-        path_data.write(f"{target},{front.frontier}\n")
+        path_data.write(f"\"{source}\",\"{target}\",{front.frontier}\n")
         path_data.close()
 
         if front.empty():
@@ -161,9 +152,6 @@ def person_id_for_name(name):
     person_ids = list(names.get(name.lower(), set()))
     if len(person_ids) == 0:
         return None
-    else:
-        return person_ids[0]
-    '''
     elif len(person_ids) > 1:
 
         print(f"Which '{name}'?")
@@ -179,7 +167,8 @@ def person_id_for_name(name):
         except ValueError:
             pass
         return None
-    '''
+    else:
+        return person_ids[0]
 
 
 def neighbors_for_person(person_id):

@@ -1,17 +1,18 @@
 import os
 import subprocess
+import random
 
 # System Settings
 systems = ["mac", "windows"]
 system = systems[1]
 
 # Experiment settings
-times = 1 # How many times sampled
-samples = 16 # How many samples
+times = 1 # How many times degrees.py is ran
+samples = 16 # How many actors available on a list to be picked for shortest_path function
 mode = "small"
 
 data = open("data.csv", "a")
-data.write("target,degrees\n")
+data.write("source,target,degrees\n")
 data.close()
 
 path_data = open("path_data.csv", "a")
@@ -26,5 +27,7 @@ if system == systems[0]:
         subprocess.run(command1)
 elif system == systems[1]:
     for i in range(times):
+        target = random.randint(1, samples)
+
         os.popen(f"start cmd /k; cd C:\\Users\\aiden\\OneDrive\\Documents\\GitHub\\D3GREES\\ ^& py degrees.py {mode} {samples} ^& exit")
 
