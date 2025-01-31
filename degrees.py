@@ -1,8 +1,6 @@
 import csv
 import sys
-import random
-
-import time
+import copy
 
 from util import Node, StackFrontier, QueueFrontier
 
@@ -56,20 +54,14 @@ def load_data(directory):
 
 
 def main():
-
     if len(sys.argv) > 2:
         sys.exit("Usage: python degrees.py [directory]")
-
     directory = sys.argv[1] if len(sys.argv) == 2 else "large"
 
     # Load data from files into memory
     print("Loading data...")
     load_data(directory)
     print("Data loaded.")
-
-    # TESTING -------------------------------------------------------------------
-
-    data = open("data.csv", "a")
 
     source = person_id_for_name(input("Name: "))
     if source is None:
@@ -110,38 +102,66 @@ def shortest_path(source, target):
     # Goal state = target
 
     # Goal test = if statement that checks if we have gotten to target
-    # Path cost = ???
     
+    # Using iterative search, similar to breadth-first search
+    depth = 1
+    depth_limit = 1000000
+
     front = QueueFrontier()
     explored = set()
     path = list()
 
+    # NODE STRUCTURE
+    # State = source id, distance from source
+    # Parent = movie, list of people preceding it
+    # Action = people ahead of it
+
     # Add root node
-    front.add(Node(source, None, neighbors_for_person(source)))
+    front.add(Node(
+        (source, 0), 
+        [None, []], 
+        neighbors_for_person(source))
+    )
 
     while True:
 
         if front.empty():
+            depth += 1
+        else:
+            next = front.remove()
+
+        print(depth)
+
+        if depth == depth_limit:
             return None
         
-        next = front.remove()
-
-        if next.state == target:
+        if next.state[0] == target:
             return path
         else:
             for pair in next.action:
-                added_node = Node(pair[1], pair[0], neighbors_for_person(pair[1]))
-                if added_node.state not in explored and front.contains_state(added_node.state) == False:
-                    if added_node.state == target:
-                        path.append((added_node.parent, added_node.state))
+
+                history = list(copy.deepcopy(next.parent[1]))
+                history.append(next.state[0])
+
+                added_node = Node(
+                    (pair[1], len(next.parent[1]) + 1), # Distance from source
+                    [pair[0], history], # The movie, along with the people before it
+                    neighbors_for_person(pair[1])
+                )
+                
+                if added_node.state[0] not in explored:
+                    if added_node.state[0] == target:
+                        path.append((added_node.parent[0], added_node.state[0]))
                         return path
                     else:
-                        front.add(added_node)
+                        # This is where depth comes into play
+                        if added_node.state[1] == depth:
+                            front.add(added_node)
                         
-            explored.add(next.state)
+            explored.add(next.state[0])
 
         if len(explored) != 1:
-            path.append((next.parent, next.state))
+            path.append((next.parent[0], next.state[0]))
 
 
 def person_id_for_name(name):
@@ -153,8 +173,6 @@ def person_id_for_name(name):
     if len(person_ids) == 0:
         return None
     elif len(person_ids) > 1:
-
-        '''
         print(f"Which '{name}'?")
         for person_id in person_ids:
             person = people[person_id]
@@ -167,12 +185,7 @@ def person_id_for_name(name):
                 return person_id
         except ValueError:
             pass
-            
         return None
-        '''
-        
-        # RANDOMIZED FOR TESTING
-        return person_ids[random.randint(0, len(person_ids) - 1)]
     else:
         return person_ids[0]
 
@@ -188,6 +201,7 @@ def neighbors_for_person(person_id):
         for person_id in movies[movie_id]["stars"]:
             neighbors.add((movie_id, person_id))
     return neighbors
+
 
 if __name__ == "__main__":
     main()
