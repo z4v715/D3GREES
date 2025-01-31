@@ -56,16 +56,11 @@ def load_data(directory):
 
 
 def main():
-    '''
+
     if len(sys.argv) > 2:
         sys.exit("Usage: python degrees.py [directory]")
-    '''
-    if len(sys.argv) != 4:
-        sys.exit("Usage: python degrees.py [directory] [source] [target]")
-    #directory = sys.argv[1] if len(sys.argv) == 2 else "large"
-    directory = sys.argv[1]
-    source = sys.argv[2]
-    target = sys.argv[3]
+
+    directory = sys.argv[1] if len(sys.argv) == 2 else "large"
 
     # Load data from files into memory
     print("Loading data...")
@@ -76,10 +71,10 @@ def main():
 
     data = open("data.csv", "a")
 
-    #source = person_id_for_name(input("Name: "))
+    source = person_id_for_name(input("Name: "))
     if source is None:
         sys.exit("Person not found.")
-        #target = person_id_for_name(input("Name: "))
+    target = person_id_for_name(input("Name: "))
     if target is None:
         sys.exit("Person not found.")
 
@@ -87,7 +82,6 @@ def main():
 
     if path is None:
         print("Not connected.")
-        data.write(f"\"{source}\",\"{target}\",N\n")
     else:
         degrees = len(path)
         print(f"{degrees} degrees of separation.")
@@ -98,30 +92,34 @@ def main():
             movie = movies[path[i + 1][0]]["title"]
             print(f"{i + 1}: {person1} and {person2} starred in {movie}")
 
-        data.write(f"\"{source}\",\"{target}\",{degrees}\n")
-
-    data.close()
-
 
 def shortest_path(source, target):
     """
-    Returns the shortest list of (movie_id, person_id) pairsp
+    Returns the shortest list of (movie_id, person_id) pairs
     that connect the source to the target.
 
     If no possible path, returns None.
     """
+
+    # Agent
+    # States = people
+    # Actions = movies
+    # Transition model (in a finite tree of actors and movies, this may be what the tree looks like after making a certain action or which nodes are explored)
+    
+    # Initial state = source
+    # Goal state = target
+
+    # Goal test = if statement that checks if we have gotten to target
+    # Path cost = ???
     
     front = QueueFrontier()
     explored = set()
     path = list()
 
+    # Add root node
     front.add(Node(source, None, neighbors_for_person(source)))
 
     while True:
-
-        path_data = open("path_data.csv", "a")
-        path_data.write(f"\"{source}\",\"{target}\",{front.frontier}\n")
-        path_data.close()
 
         if front.empty():
             return None

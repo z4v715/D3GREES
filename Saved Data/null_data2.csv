@@ -28,3 +28,6 @@ target,nodes
 # I just realized that I may have to add more people to the frontier at a time
 # I added a part of the code that scans to see if any of the people in the children states are the target
 # I dont have to worry too much about adding too many people
+
+# However, this problem is probably due to the fact that we are using one specific actor here, Kevin Bacon
+# It is completely possible that none of these actors are actually connected to Kevin Bacon since all of them came back null
